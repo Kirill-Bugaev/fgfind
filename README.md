@@ -6,17 +6,17 @@ Usage: `fgfind FONT GLYPHS`
 
 ## Examples
 
-```shell
-$ ./fgfind Inconsolata abc
-Font matches 'Inconsolata'
-File: /usr/share/fonts/TTF/Inconsolata-Regular.ttf
-Family: Inconsolata
-Style: Regular
+```
+$ ./fgfind 'DejaVu Sans' abc
+Font matches 'DejaVu Sans'
+File: /usr/share/fonts/TTF/DejaVuSans.ttf
+Family: DejaVu Sans
+Style: Book
 
 All glyphs are present in preset font.
 ```
 
-```shell
+```
 $ ./fgfind Inconsolata ✚●
 Font matches 'Inconsolata'
 File: /usr/share/fonts/TTF/Inconsolata-Regular.ttf
