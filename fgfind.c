@@ -101,7 +101,7 @@ int main(int argc, char *argv[])
 	wchar_t *wcs;
 	size_t len, i;
 	unsigned j;
-	int absent = 0;
+	int absent = 0, loaded = 0;
 
 	if (argc < 3) {
 		fprintf(stderr, "Not enough arguments\n"
@@ -147,11 +147,16 @@ int main(int argc, char *argv[])
 
 	len = utf2wchar(&wcs, argv[2]);
 
-	fl = getfontslist();
-
 	/* Check gluphs are present in font */
 	for (i = 0; i < len; ++i)
 		if (!XftCharIndex(xw.dpy, font, wcs[i])) {
+			if (!loaded) {
+				printf("Loading fonts db...\n");
+				fl = getfontslist();
+				printf("Done\n\n");
+				loaded = 1;
+			}
+
 			absent = 1;
 			printf("Glyph %lc is absent in preset font.\n"
 					"It is present in fonts:\n",
@@ -180,7 +185,7 @@ int main(int argc, char *argv[])
 	if (!absent)
 		printf("All glyphs are present in preset font.\n");
 
-	if (fl.fs) {
+	if (loaded && fl.fs) {
 		for (j = 0; j < fl.fs->nfont; ++j)
 			XftFontClose(xw.dpy, fl.fonts[j]);
 		if (fl.fs->nfont)
